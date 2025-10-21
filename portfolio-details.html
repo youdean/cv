@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Portfolio Details</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <main id="main">
+
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-8">
+            <div class="portfolio-details-slider swiper">
+              <div class="swiper-wrapper align-items-center" id="pd-images">
+                <!-- images injected here -->
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="portfolio-info">
+              <h3 id="pd-title">Project information</h3>
+              <ul id="pd-meta">
+                <!-- meta injected here -->
+              </ul>
+            </div>
+            <div class="portfolio-description">
+              <h2>Function</h2>
+              <p id="pd-description"></p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Details Section -->
+
+  </main><!-- End #main -->
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.umd.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Portfolio data -->
+  <script src="assets/js/portfolio-data.js"></script>
+
+  <script>
+    (function(){
+      function qsParam(name){
+        const params = new URLSearchParams(window.location.search);
+        return params.has(name) ? params.get(name) : null;
+      }
+
+      const id = parseInt(qsParam('id') || '1', 10);
+      const item = (window.PORTFOLIO_DATA || []).find(p => p.id === id);
+      if(!item){
+        document.getElementById('pd-title').textContent = 'Project not found';
+        document.getElementById('pd-description').textContent = '';
+        return;
+      }
+
+      const imagesEl = document.getElementById('pd-images');
+      item.images.forEach(src => {
+        const slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = item.title;
+        slide.appendChild(img);
+        imagesEl.appendChild(slide);
+      });
+
+      document.getElementById('pd-title').textContent = item.title;
+
+      const meta = document.getElementById('pd-meta');
+      meta.innerHTML = '';
+      const addMeta = (k, v) => {
+        const li = document.createElement('li');
+        li.innerHTML = '<strong>' + k + '</strong>: ' + v;
+        meta.appendChild(li);
+      };
+      addMeta('Category', item.category);
+      addMeta('Tech', item.tech);
+      addMeta('Project date', item.date);
+      addMeta('Contribution', item.contribution);
+
+      document.getElementById('pd-description').textContent = item.description;
+
+      // init swiper (same options as template uses)
+      if (typeof Swiper !== 'undefined'){
+        new Swiper('.portfolio-details-slider', { speed: 400, loop: true, pagination: { el: '.swiper-pagination', type: 'bullets', clickable: true } });
+      }
+
+    })();
+  </script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
